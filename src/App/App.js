@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.scss';
+import { getProjects, getPalettes }from '../utils/apiCalls'
+import ProjectsContainer from '../ProjectsContainer/ProjectsContainer';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(){
+    super();
+    this.state = {
+      projects: [],
+      palettes: []
+    }
+  }
+
+  // async componentDidMount() {
+  //   const projects = await getProjects()
+  //   this.setState({projects})
+  //   const palettes = await getPalettes()
+  //   this.setState({palettes})
+  // }
+
+  render() {
+    return (
+      <div className="App">
+        <ProjectsContainer />
+      </div>
+    );
+  }
 }
 
 export default App;
