@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.scss';
 import ColorsContainer from '../ColorsContainer/ColorsContainer'
+import ProjectsContainer from '../ProjectsContainer/ProjectsContainer'
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
         <h1>Palette Picker</h1>
       </header>
       <ColorsContainer />
+      <ProjectsContainer />
     </main>
   );
 }
