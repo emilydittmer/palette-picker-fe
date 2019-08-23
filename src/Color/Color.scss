@@ -1,0 +1,28 @@
+.color-box {
+  height: 16.4%;
+  width: 100%;
+  &:hover {
+    transform: scale(1.01)
+  }
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.color-box__save-button {
+  height: 25px;
+  width: 70px;
+  border-radius: 15px;
+  background-color: grey;
+  margin-right: 3%;
+  display: flex;
+  align-items: center;
+}
+
+.save-button__inner-toggle {
+  height: 17px;
+  width: 17px;
+  border-radius: 20px;
+  background-color: #fff;
+  margin: 0px 5px;
+}
