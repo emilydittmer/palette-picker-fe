@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react'
 import './App.scss';
 import ColorsContainer from '../ColorsContainer/ColorsContainer'
 

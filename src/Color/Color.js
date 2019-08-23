@@ -4,7 +4,7 @@ import './Color.scss'
 const Color = ({backgroundColor}) => {
   
   const styling = {
-    backgroundColor,
+    backgroundColor: `#${backgroundColor}`,
   }
   
   return (
