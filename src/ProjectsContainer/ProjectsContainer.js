@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './ProjectsContainer.scss';
 import { getProjects }from '../utils/apiCalls'
+import IndividualProject from '../IndividualProject/IndividualProject'
 
 
 class ProjectsContainer extends Component{
@@ -17,8 +18,20 @@ class ProjectsContainer extends Component{
   }
 
   render(){
+    const allProjects = this.state.projects.map(project => {
+      return (
+        <IndividualProject 
+          key={project.id}
+          title={project.title}
+          id={project.id}
+        />
+      )
+    })
     return(
-      <h2>My Projects</h2>
+      <section>
+        <h2>My Projects</h2>
+        {allProjects}
+      </section>
     )
   }
 }

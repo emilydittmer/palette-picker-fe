@@ -42,3 +42,29 @@ export const getPalettes = () => {
     })
     .catch(error => error.message)
 }
+
+export const fetchPalettesInProject = (id) => {
+  console.log(id)
+  return fetch(`https://palettepicker-api.herokuapp.com/api/v1/projects/${id}/palettes`)
+    .then(response => {
+      if(!response.ok) {
+        throw Error('Error fetching palette');
+      } else {
+        return response.json();
+      }
+    })
+    .then(palettes => {
+      return palettes.map(palette => {
+        return {
+          id: palette.id,
+          project_id: palette.project_id,
+          color_1: palette.color_1,
+          color_2: palette.color_2,
+          color_3: palette.color_3,
+          color_4: palette.color_4,
+          color_5: palette.color_5
+        }
+      })
+    })
+    .catch(error => error.message)
+}
