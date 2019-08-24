@@ -34,7 +34,9 @@ class IndividualProject extends Component {
     return(
       <article>
         <h1>{this.props.title}</h1>
+        <section className='all-palettes'>
           {allPalettes}
+        </section>
       </article>
     )
   }
