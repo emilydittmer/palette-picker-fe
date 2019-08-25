@@ -33,6 +33,13 @@ class ColorsContainer extends React.Component {
     this.setState({colors})
   }
 
+  handleLockColor = (index) => {
+    let locks = this.state.locked;
+    locks[index] = !locks[index];
+    this.setState({locked: locks})
+    console.log(this.state.locked)
+  }
+
   render() {
     return (
       <section className="color-container__styling">
@@ -43,11 +50,11 @@ class ColorsContainer extends React.Component {
         >Generate more colors</button>
       </form>
       <article className="color-container__template">
-        <Color backgroundColor={this.state.colors[0]} index='0'/>
-        <Color backgroundColor={this.state.colors[1]} index='1'/>
-        <Color backgroundColor={this.state.colors[2]} index='2'/>
-        <Color backgroundColor={this.state.colors[3]} index='3'/>
-        <Color backgroundColor={this.state.colors[4]} index='4'/>
+        <Color backgroundColor={this.state.colors[0]} index='0' handleLockColor={this.handleLockColor}/>
+        <Color backgroundColor={this.state.colors[1]} index='1' handleLockColor={this.handleLockColor}/>
+        <Color backgroundColor={this.state.colors[2]} index='2' handleLockColor={this.handleLockColor}/>
+        <Color backgroundColor={this.state.colors[3]} index='3' handleLockColor={this.handleLockColor}/>
+        <Color backgroundColor={this.state.colors[4]} index='4' handleLockColor={this.handleLockColor}/>
       </article>
       </section>
     )
