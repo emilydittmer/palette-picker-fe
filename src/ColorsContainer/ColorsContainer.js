@@ -14,7 +14,6 @@ class ColorsContainer extends React.Component {
   }
   
   componentDidMount() {
-    console.log('yes')
     const scheme = new ColorScheme();
     let colors = scheme.from_hue(this.randNum()).scheme('contrast').colors()
     this.setState({colors})
