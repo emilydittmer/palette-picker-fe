@@ -20,7 +20,7 @@ class ColorsContainer extends React.Component {
     this.setState({colors})
   }
   
-  randNum = () => Math.floor(Math.random() * 300)
+  randNum = () => Math.floor(Math.random() * 500)
   
   generateNewColors = (e) => {
     e.preventDefault()
