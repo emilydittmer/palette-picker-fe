@@ -13,12 +13,13 @@ class IndividualProject extends Component {
 
   async componentDidMount(){
     const palettes = await fetchPalettesInProject(this.props.id)
-    this.setState({ palettes })
+    if(palettes !== 'Error fetching palette') {
+      this.setState({ palettes })
+    }
   }
 
   render(){
-    console.log(this.state.palettes)
-    let addPalette
+    let addPalette = {};
     let allPalettes
     if(this.state.palettes === []){
       addPalette = <h2>Add a palette!</h2>
