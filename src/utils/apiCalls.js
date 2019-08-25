@@ -70,27 +70,27 @@ export const fetchPalettesInProject = (id) => {
 }
 
 export const addNewProject = (project) => {
-  // return fetch('https://palettepicker-api.herokuapp.com/api/v1/projects', {
-  //   method: 'POST',
-  //   body: JSON.stringify(project),
-  //   headers: {
-  //     "Content-Type": "application/json"
-  //   }
-  // })
-  // .then(response => {
-  //   if(!response.ok){
-  //     return error => console.log(error);
-  //   } else {
-  //     return response.json();
-  //   }
-  // })
-  // .then(project => {
-  //   return project.map(project => {
-  //     return {
-  //       id: project.id,
-  //       title: project.title
-  //     }
-  //   })
-  // })
-  // .catch(error => console.log(error.message))
+  return fetch('https://palettepicker-api.herokuapp.com/api/v1/projects', {
+    method: 'POST',
+    body: JSON.stringify(project),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(response => {
+    if(!response.ok){
+      return error => console.log(error);
+    } else {
+      return response.json();
+    }
+  })
+  .then(project => {
+    return project.map(project => {
+      return {
+        id: project.id,
+        title: project.title
+      }
+    })
+  })
+  .catch(error => console.log(error.message))
 }

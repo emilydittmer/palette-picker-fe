@@ -7,7 +7,8 @@ class IndividualProject extends Component {
   constructor(project){
     super(project);
     this.state={
-      palettes:[]
+      palettes:[],
+      error: ''
     }
   }
 
@@ -15,16 +16,18 @@ class IndividualProject extends Component {
     const palettes = await fetchPalettesInProject(this.props.id)
     if(palettes !== 'Error fetching palette') {
       this.setState({ palettes })
+    } else {
+      this.setState({error: palettes})
     }
   }
 
   render(){
     let addPalette = {};
     let allPalettes
-    if(this.state.palettes === []){
-      addPalette = <h2>Add a palette!</h2>
+    if(this.state.error){
+      addPalette = <h3>Add a palette!</h3>
     } else {
-       this.state.palettes.map(palette => {
+       allPalettes = this.state.palettes.map(palette => {
         return (
           <PaletteInProject 
             key={palette.id}
@@ -43,7 +46,7 @@ class IndividualProject extends Component {
       <article>
         <h1>{this.props.title}</h1>
         <section className='all-palettes'>
-          {addPalette.length && addPalette}
+          {this.state.error && addPalette}
           {this.state.palettes && allPalettes}
         </section>
       </article>
