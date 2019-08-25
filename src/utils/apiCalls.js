@@ -94,3 +94,32 @@ export const addNewProject = (project) => {
   })
   .catch(error => console.log(error.message))
 }
+
+export const addNewPalette = (colors, id) => {
+  const newPalette = {
+    project_id: id,
+    color_1: `#${colors[0]}`,
+    color_2: `#${colors[1]}`,
+    color_3: `#${colors[2]}`,
+    color_4: `#${colors[3]}`,
+    color_5: `#${colors[4]}`
+  }
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newPalette)
+  }
+  console.log(newPalette)
+  return fetch('https://palettepicker-api.herokuapp.com/api/v1/palettes', options)
+    .then( response => {
+        if(!response.ok){
+          return error => console.log(error);
+        } else {
+          return response.json();
+        }
+      })
+      .then(palette => console.log(palette))
+      .catch(error => console.log(error.message))
+}
