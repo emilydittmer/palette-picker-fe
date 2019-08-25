@@ -1,6 +1,7 @@
 .color-box {
   height: 16.4%;
   width: 100%;
+  animation: slide-in 3s;
   &:hover {
     transform: scale(1.01)
   }
@@ -15,8 +16,26 @@
   border-radius: 15px;
   background-color: grey;
   margin-right: 3%;
-  display: flex;
-  align-items: center;
+  appearance: none;
+  outline: none;
+  box-shadow: inset 0 0 5px rbga(0,0,0,.2);
+  &:checked {
+    background: #03a9f4;
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 25px;
+    border-radius: 20px;
+    background: #000;
+    transition: .5s;
+    transform: scale(1.05);
+  }
+  &:checked:before {
+    transform: translateX(43px);
+    transition: .5s;
+  }
 }
 
 .save-button__inner-toggle {
@@ -25,4 +44,13 @@
   border-radius: 20px;
   background-color: #fff;
   margin: 0px 5px;
+}
+
+@keyframes slide-in {
+  0% {
+    transform: translateX(-100%)
+  }
+  100% {
+    transform: translateX(0%)
+  }
 }

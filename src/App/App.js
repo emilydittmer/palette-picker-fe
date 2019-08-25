@@ -11,8 +11,10 @@ function App() {
       <header className="app-header__styling">
         <h1>Palette Picker</h1>
       </header>
-      <ColorsContainer />
-      <ProjectsContainer />
+      <section className='main-section'>
+        <ColorsContainer />
+        <ProjectsContainer />
+      </section>
     </main>
   );
 }
