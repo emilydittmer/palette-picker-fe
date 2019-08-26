@@ -1,6 +1,7 @@
 import React from "react";
 import "./PaletteInProject.scss";
 
+
 const PaletteInProject = ({ id, color1, color2, color3, color4, color5, deletePalette }) => {
 
   return (
