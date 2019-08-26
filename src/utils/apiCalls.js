@@ -135,3 +135,15 @@ export const deletePalette = async (id) => {
     .then(response => console.log('Success:', JSON.stringify(response)))
     .catch(error => Error('Error deleting palette'));
 }
+
+export const deleteProject = async (id) => {
+  await fetch(`https://palettepicker-api.herokuapp.com/api/v1/projects/${id}`, {
+    method:'DELETE',
+    headers: {
+      'Content-Type':"application/json"
+    }
+  })
+    .then(response => response.json())
+    .then(response => console.log('Success:', JSON.stringify(response)))
+    .catch(error => Error('Error deleting project'));
+}

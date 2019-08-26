@@ -4,7 +4,7 @@ import { fetchPalettesInProject, deletePalette } from '../utils/apiCalls'
 import PaletteInProject from '../PaletteInProject/PaletteInProject'
 
 class IndividualProject extends Component {
-  constructor(project){
+  constructor({project}){
     super(project);
     this.state={
       palettes:[],
@@ -51,6 +51,7 @@ class IndividualProject extends Component {
     return(
       <article>
         <h1>{this.props.title}</h1>
+        <button className='delete-project-btn' onClick={() => this.props.deleteProject(this.props.id)}>🗑</button>
         <section className='all-palettes'>
           {this.state.error && addPalette}
           {this.state.palettes && allPalettes}
