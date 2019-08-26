@@ -1,4 +1,5 @@
-import { ErrorReducer } from './ErrorReducer'
+import { ErrorReducer } from './ErrorReducer';
+import { LoadingReducer } from './LoadingReducer'
 
 
 describe('Reducers', () => {
@@ -20,6 +21,26 @@ describe('Reducers', () => {
       const result = ErrorReducer('', mockAction)
       
       expect(result).toEqual(expected)
+    })
   })
-})
+
+  describe('LoadingReducer', () => {
+    it('should return default state', () => {
+      const mockState = undefined;
+      const expected = false;
+      const result = LoadingReducer(mockState, {})
+
+      expect(result).toEqual(expected)
+    })
+    it('Should return loading state based on type IS LOADING', () => {
+      const mockAction = {
+        type: 'IS LOADING',
+        loading: true
+      }
+      const expected = true;
+      const result = LoadingReducer(false, mockAction)
+
+      expect(result).toEqual(expected)
+    })
+  })
 })
