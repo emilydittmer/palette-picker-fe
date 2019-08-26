@@ -1,5 +1,6 @@
 import { ErrorReducer } from './ErrorReducer';
 import { LoadingReducer } from './LoadingReducer'
+import { PaletteReducer } from './PaletteReducer'
 
 
 describe('Reducers', () => {
@@ -39,6 +40,32 @@ describe('Reducers', () => {
       }
       const expected = true;
       const result = LoadingReducer(false, mockAction)
+
+      expect(result).toEqual(expected)
+    })
+  })
+
+  describe('PaletteReducer', () => {
+    it('Should return default state', () => {
+      const expected = []
+      const mockState = undefined;
+      const result = PaletteReducer(mockState, {})
+
+      expect(result).toEqual(expected)
+    })
+    it('Should return a palette object when action type ADD PALETTE', () => {
+      const mockAction = {
+        type: 'ADD PALETTE',
+        palette: {
+          id: 1,
+          color: 'red'
+        }
+      }
+      const expected = {
+        id: 1,
+        color: 'red'
+      }
+      const result = PaletteReducer([], mockAction)
 
       expect(result).toEqual(expected)
     })
