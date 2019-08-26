@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './IndividualProject.scss'
-import { fetchPalettesInProject } from '../utils/apiCalls'
 import PaletteInProject from '../PaletteInProject/PaletteInProject'
 import { connect } from 'react-redux'
 import { deleteProjectThunk } from '..//Thunks/ProjectThunks'
@@ -15,30 +14,27 @@ class IndividualProject extends Component {
     }
   }
 
-  async componentDidMount(){
-    const palettes = await fetchPalettesInProject(this.props.id)
-    console.log(palettes)
-    if(palettes !== 'Error fetching palette') {
-      this.setState({ palettes })
+  componentDidMount(){
+    const palettes = this.props.palettes.filter(palette => palette.project_id === this.props.id)
+    if (palettes.length > 0) {
+      this.setState({palettes})
     } else {
-      this.setState({error: palettes})
+      this.setState({error: 'Error fetching palettes'})
     }
   }
 
-  async componentDidUpdate() {
-    const palettes = await fetchPalettesInProject(this.props.id)
-    if (palettes === this.state.palettes) {
-      return
-    } else if (palettes !== 'Error fetching palette') {
-      this.setState({ palettes })
+  componentWillReceiveProps(props) {
+    console.log(props)
+    const palettes = props.palettes.filter(palette => palette.project_id === this.props.id)
+    if (palettes.length > 0) {
+      this.setState({palettes})
     } else {
-      this.setState({error: palettes})
+      this.setState({error: 'Error fetching palettes'})
     }
   }
 
   deletePalette = async (id) => {
     const palettes = await this.props.deletePalette(id, this.props.id)
-    console.log(palettes)
     if(palettes !== undefined) {
       this.setState({ palettes })
     } else {
@@ -74,16 +70,20 @@ class IndividualProject extends Component {
         <button className='delete-project-btn' onClick={() => this.props.deleteProject(this.props.id)}>🗑</button>
         <section className='all-palettes'>
           {this.state.error && addPalette}
-          {this.state.palettes && allPalettes}
+          {this.props.loading && <h2>Loading</h2>}
+          {this.state.palettes && !this.props.loading && allPalettes}
         </section>
       </article>
     )
   }
 }
 
+const mapStateToProps = store => ({
+  ...store
+})
 const mapDispatchToProps = dispatch => ({
   deleteProject: id => dispatch(deleteProjectThunk(id)),
   deletePalette: (id, projectId) => dispatch(deletePaletteThunk(id, projectId))
 })
 
-export default connect(null, mapDispatchToProps)(IndividualProject);
+export default connect(mapStateToProps, mapDispatchToProps)(IndividualProject);

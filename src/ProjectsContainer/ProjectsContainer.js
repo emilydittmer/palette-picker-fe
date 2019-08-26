@@ -3,7 +3,7 @@ import "./ProjectsContainer.scss";
 import { addNewProject } from "../utils/apiCalls";
 import IndividualProject from "../IndividualProject/IndividualProject";
 import { connect } from 'react-redux'
-import { getProjectsThunk } from '../Thunks/ProjectThunks'
+import { getProjectsThunk, addProjectThunk } from '../Thunks/ProjectThunks'
 
 class ProjectsContainer extends Component {
   constructor() {
@@ -11,26 +11,35 @@ class ProjectsContainer extends Component {
     this.state = {
       projects: [],
       newTitle: "",
-      palettes: []
+      error: null,
     };
   }
 
   async componentDidMount() {
     this.props.getAllProjects()
-    this.setState({palettes: this.props.palettes})
   }
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  handleCheckTitle = () => {
+    return this.props.projects.filter(project => project.title === this.state.newTitle)
+  }
+  
   addNewProject(event) {
     event.preventDefault();
     const project = {
       title: this.state.newTitle
     };
-    addNewProject(project)
-    this.resetInputs();
+    let title = this.handleCheckTitle()
+    if(title.length > 0) {
+      this.setState({error: 'Project name taken'})
+    } else {
+      this.props.addProject(project)
+      this.resetInputs();
+      this.setState({error: null})
+    }
   }
 
   resetInputs = () => {
@@ -59,6 +68,7 @@ class ProjectsContainer extends Component {
             name="newTitle"
           />
           <button onClick={event => this.addNewProject(event)}>Add New Project</button>
+          {this.state.error}
         </form>
         {allProjects}
       </section>
@@ -72,5 +82,6 @@ const mapStateToProps = store => ({
 
 const mapDispatchToProps = dispatch => ({
   getAllProjects: () => dispatch(getProjectsThunk()),
+  addProject: project => dispatch(addProjectThunk(project))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectsContainer);

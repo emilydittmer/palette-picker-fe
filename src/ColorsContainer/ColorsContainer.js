@@ -13,7 +13,7 @@ class ColorsContainer extends React.Component {
     super();
     this.state = {
       locked:[false, false, false, false, false],
-      currentProject: null,
+      currentProject: '',
       error: ''
     }
   }
@@ -43,7 +43,6 @@ class ColorsContainer extends React.Component {
     let locks = this.state.locked;
     locks[index] = !locks[index];
     this.setState({locked: locks})
-    console.log(this.state.locked)
   }
 
   handleOnChange = (e) => {
@@ -54,7 +53,6 @@ class ColorsContainer extends React.Component {
     e.preventDefault()
     await this.props.savePalette(this.props.currentPalette, this.state.currentProject)
       .catch(error => console.log(error.message))
-    this.props.getPalettes()
   }
 
   render() {

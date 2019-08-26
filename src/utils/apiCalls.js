@@ -83,13 +83,11 @@ export const addNewProject = (project) => {
       return response.json();
     }
   })
-  .then(project => {
-    return project.map(project => {
+  .then(newProject => {
       return {
-        id: project.id,
+        id: newProject.id,
         title: project.title
       }
-    })
   })
   .catch(error => console.log(error.message))
 }

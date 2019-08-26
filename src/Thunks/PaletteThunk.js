@@ -1,5 +1,5 @@
 import { deletePalette, fetchPalettesInProject, addNewPalette, getPalettes } from '../utils/apiCalls'
-import {hasErrored, isLoading, addToPalettes, getAllPalettes } from '../Actions'
+import {hasErrored, isLoading, getAllPalettes } from '../Actions'
 
 export const deletePaletteThunk = (id, projectId) => {
   console.log(id, projectId)
@@ -24,8 +24,9 @@ export const addPaletteThunk = (colors, id) => {
   return async dispatch => {
     try {
       dispatch(isLoading(true))
-      const response = await addNewPalette(colors, id)
-      dispatch(addToPalettes(response))
+      await addNewPalette(colors, id)
+      const response = await getPalettes()
+      dispatch(getAllPalettes(response))
       dispatch(isLoading(false))
     }
     catch(error) {

@@ -1,5 +1,5 @@
-import { getAllProjects, hasErrored, isLoading } from '../Actions'
-import { getProjects, deleteProject } from '../utils/apiCalls'
+import { getAllProjects, hasErrored, isLoading, addProject } from '../Actions'
+import { getProjects, deleteProject, addNewProject } from '../utils/apiCalls'
 
 export const getProjectsThunk = () => {
   return async dispatch => {
@@ -22,9 +22,24 @@ export const deleteProjectThunk = id => {
       await deleteProject(id)
       const response = await getProjects()
       dispatch(getAllProjects(response))
-
+      dispatch(isLoading(false))
     }
     catch (error) {
+      dispatch(isLoading(false))
+      dispatch(hasErrored(error))
+    }
+  }
+}
+
+export const addProjectThunk = project => {
+  return async dispatch => {
+    try {
+      dispatch(isLoading(true))
+      const response = await addNewProject(project)
+      console.log(response)
+      dispatch(addProject(response))
+    }
+    catch(error) {
       dispatch(isLoading(false))
       dispatch(hasErrored(error))
     }
