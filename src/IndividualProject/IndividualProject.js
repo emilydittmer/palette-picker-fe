@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './IndividualProject.scss'
-import { fetchPalettesInProject } from '../utils/apiCalls'
+import { fetchPalettesInProject, deletePalette } from '../utils/apiCalls'
 import PaletteInProject from '../PaletteInProject/PaletteInProject'
 
 class IndividualProject extends Component {
-  constructor(project){
+  constructor({project}){
     super(project);
     this.state={
       palettes:[],
@@ -19,6 +19,11 @@ class IndividualProject extends Component {
     } else {
       this.setState({error: palettes})
     }
+  }
+
+  deletePalette = async id => {
+    let removedPalette = await deletePalette(id)
+    await this.setState({palettes: [...this.state.palettes]})
   }
 
   render(){
@@ -38,6 +43,7 @@ class IndividualProject extends Component {
             color3={palette.color_3}
             color4={palette.color_4}
             color5={palette.color_5}
+            deletePalette={this.deletePalette}
           />
         )
       })
@@ -45,6 +51,7 @@ class IndividualProject extends Component {
     return(
       <article>
         <h1>{this.props.title}</h1>
+        <button className='delete-project-btn' onClick={() => this.props.deleteProject(this.props.id)}>🗑</button>
         <section className='all-palettes'>
           {this.state.error && addPalette}
           {this.state.palettes && allPalettes}
