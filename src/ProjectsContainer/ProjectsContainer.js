@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./ProjectsContainer.scss";
 import { getProjects, addNewProject } from "../utils/apiCalls";
 import IndividualProject from "../IndividualProject/IndividualProject";
+import { connect } from 'react-redux'
 
 class ProjectsContainer extends Component {
   constructor() {
@@ -63,4 +64,4 @@ class ProjectsContainer extends Component {
   }
 }
 
-export default ProjectsContainer;
+export default connect(null, null)(ProjectsContainer);
