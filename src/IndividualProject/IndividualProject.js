@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './IndividualProject.scss'
 import { fetchPalettesInProject, deletePalette } from '../utils/apiCalls'
 import PaletteInProject from '../PaletteInProject/PaletteInProject'
+import { connect } from 'react-redux'
+import { deleteProjectThunk } from '..//Thunks/ProjectThunks'
 
 class IndividualProject extends Component {
   constructor({project}){
@@ -22,7 +24,7 @@ class IndividualProject extends Component {
   }
 
   deletePalette = async id => {
-    let removedPalette = await deletePalette(id)
+    await deletePalette(id)
     await this.setState({palettes: [...this.state.palettes]})
   }
 
@@ -61,4 +63,8 @@ class IndividualProject extends Component {
   }
 }
 
-export default IndividualProject;
+const mapDispatchToProps = dispatch => ({
+  deleteProject: id => dispatch(deleteProjectThunk(id))
+})
+
+export default connect(null, mapDispatchToProps)(IndividualProject);

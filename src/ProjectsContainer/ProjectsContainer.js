@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./ProjectsContainer.scss";
-import { addNewProject, deleteProject } from "../utils/apiCalls";
+import { addNewProject } from "../utils/apiCalls";
 import IndividualProject from "../IndividualProject/IndividualProject";
 import { connect } from 'react-redux'
 import { getProjectsThunk } from '../Thunks/ProjectThunks'
@@ -35,11 +35,6 @@ class ProjectsContainer extends Component {
     this.setState({ newTitle: "", });
   };
 
-  deleteProject = async id => {
-    let removedProject = await deleteProject(id)
-    this.setState({projects: [...this.state.projects]})
-  }
-
   render() {
     const allProjects = this.props.projects.map(project => {
       return (
@@ -47,7 +42,6 @@ class ProjectsContainer extends Component {
           key={project.id}
           title={project.title}
           id={project.id}
-          deleteProject = {this.deleteProject}
         />
       );
     });
@@ -75,6 +69,6 @@ const mapStateToProps = store => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getAllProjects: () => dispatch(getProjectsThunk())
+  getAllProjects: () => dispatch(getProjectsThunk()),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectsContainer);
