@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './IndividualProject.scss'
-import { fetchPalettesInProject } from '../utils/apiCalls'
+import { fetchPalettesInProject, deletePalette } from '../utils/apiCalls'
 import PaletteInProject from '../PaletteInProject/PaletteInProject'
 
 class IndividualProject extends Component {
@@ -21,6 +21,11 @@ class IndividualProject extends Component {
     }
   }
 
+  deletePalette = async id => {
+    let removedPalette = await deletePalette(id)
+    await this.setState({palettes: [...this.state.palettes]})
+  }
+
   render(){
     let addPalette = {};
     let allPalettes
@@ -38,6 +43,7 @@ class IndividualProject extends Component {
             color3={palette.color_3}
             color4={palette.color_4}
             color5={palette.color_5}
+            deletePalette={this.deletePalette}
           />
         )
       })
