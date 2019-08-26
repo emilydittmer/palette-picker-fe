@@ -3,6 +3,7 @@ import "./ProjectsContainer.scss";
 import { getProjects, addNewProject } from "../utils/apiCalls";
 import IndividualProject from "../IndividualProject/IndividualProject";
 import { connect } from 'react-redux'
+import { getAllProjects } from '../Actions'
 
 class ProjectsContainer extends Component {
   constructor() {
@@ -15,7 +16,7 @@ class ProjectsContainer extends Component {
 
   async componentDidMount() {
     const projects = await getProjects();
-    this.setState({ projects });
+    this.props.getAllProjects(projects)
   }
 
   handleChange = event => {
@@ -36,7 +37,7 @@ class ProjectsContainer extends Component {
   };
 
   render() {
-    const allProjects = this.state.projects.map(project => {
+    const allProjects = this.props.projects.map(project => {
       return (
         <IndividualProject
           key={project.id}
@@ -64,4 +65,11 @@ class ProjectsContainer extends Component {
   }
 }
 
-export default connect(null, null)(ProjectsContainer);
+const mapStateToProps = store => ({
+  ...store
+})
+
+const mapDispatchToProps = dispatch => ({
+  getAllProjects: (projects) => dispatch(getAllProjects(projects))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectsContainer);

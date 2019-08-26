@@ -3,7 +3,7 @@ export const addPalette = colors => ({
   palette: colors
 })
 
-export const getProjects = projects => ({
+export const getAllProjects = projects => ({
   type: 'GET PROJECTS',
   projects
 })
