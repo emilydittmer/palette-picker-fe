@@ -37,7 +37,7 @@ class ProjectsContainer extends Component {
   };
 
   deleteProject = async id => {
-    let removedProject = await deleteProject(id)
+    await deleteProject(id)
     this.setState({projects: [...this.state.projects]})
   }
 

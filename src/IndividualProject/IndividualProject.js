@@ -22,7 +22,7 @@ class IndividualProject extends Component {
   }
 
   deletePalette = async id => {
-    let removedPalette = await deletePalette(id)
+    await deletePalette(id)
     await this.setState({palettes: [...this.state.palettes]})
   }
 
