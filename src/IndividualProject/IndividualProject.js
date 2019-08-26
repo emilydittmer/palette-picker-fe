@@ -43,7 +43,7 @@ class IndividualProject extends Component {
       })
     }
     return(
-      <article>
+      <article className="individual-project">
         <h1>{this.props.title}</h1>
         <section className='all-palettes'>
           {this.state.error && addPalette}

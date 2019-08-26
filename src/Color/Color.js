@@ -5,6 +5,7 @@ const Color = ({backgroundColor, index, handleLockColor}) => {
   
   const styling = {
     backgroundColor: `#${backgroundColor}`,
+    transitionDelay: `${index * 500}ms`
   }
   
   return (

@@ -45,7 +45,7 @@ class ProjectsContainer extends Component {
       );
     });
     return (
-      <section>
+      <section className="project-section">
         <h2>My Projects</h2>
         <form>
           <input
