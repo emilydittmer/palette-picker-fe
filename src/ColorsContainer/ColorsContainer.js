@@ -3,6 +3,7 @@ import './ColorsContainer.scss'
 import Color from '../Color/Color'
 import ColorScheme from 'color-scheme'
 import { getProjects, addNewPalette } from '../utils/apiCalls'
+import { addPaletteThunk } from '../Thunks/PaletteThunk'
 import { connect } from 'react-redux'
 import { addPalette } from '../Actions'
  

@@ -4,6 +4,7 @@ import { fetchPalettesInProject, deletePalette } from '../utils/apiCalls'
 import PaletteInProject from '../PaletteInProject/PaletteInProject'
 import { connect } from 'react-redux'
 import { deleteProjectThunk } from '..//Thunks/ProjectThunks'
+import { deletePaletteThunk } from '../Thunks/PaletteThunk'
 
 class IndividualProject extends Component {
   constructor({project}){
@@ -16,6 +17,7 @@ class IndividualProject extends Component {
 
   async componentDidMount(){
     const palettes = await fetchPalettesInProject(this.props.id)
+    console.log(palettes)
     if(palettes !== 'Error fetching palette') {
       this.setState({ palettes })
     } else {
@@ -23,9 +25,14 @@ class IndividualProject extends Component {
     }
   }
 
-  deletePalette = async id => {
-    await deletePalette(id)
-    await this.setState({palettes: [...this.state.palettes]})
+  deletePalette = async (id) => {
+    const palettes = await deletePalette(id, this.props.id)
+    console.log(palettes)
+    if(palettes !== undefined) {
+      this.setState({ palettes })
+    } else {
+      this.setState({error: 'Error: No palettes in project'})
+    }
   }
 
   render(){
@@ -64,7 +71,8 @@ class IndividualProject extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  deleteProject: id => dispatch(deleteProjectThunk(id))
+  deleteProject: id => dispatch(deleteProjectThunk(id)),
+  deletePalette: (id, projectId) => dispatch(deletePaletteThunk(id, projectId))
 })
 
 export default connect(null, mapDispatchToProps)(IndividualProject);
