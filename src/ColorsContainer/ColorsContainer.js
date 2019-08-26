@@ -3,7 +3,7 @@ import './ColorsContainer.scss'
 import Color from '../Color/Color'
 import ColorScheme from 'color-scheme'
 import { getProjects, addNewPalette } from '../utils/apiCalls'
-import { addPaletteThunk } from '../Thunks/PaletteThunk'
+import { addPaletteThunk, getPalettesThunk } from '../Thunks/PaletteThunk'
 import { connect } from 'react-redux'
 import { addPalette } from '../Actions'
  
@@ -12,9 +12,7 @@ class ColorsContainer extends React.Component {
   constructor() {
     super();
     this.state = {
-      colors: [],
       locked:[false, false, false, false, false],
-      projects: [],
       currentProject: null,
       error: ''
     }
@@ -24,8 +22,7 @@ class ColorsContainer extends React.Component {
     const scheme = new ColorScheme();
     let colors = scheme.from_hue(this.randNum()).scheme('contrast').colors()
     this.props.addPalette(colors)
-    const projects = await getProjects();
-    this.setState({ projects });
+    this.props.getPalettes()
   }
   
   randNum = () => Math.floor(Math.random() * 500)
@@ -53,14 +50,15 @@ class ColorsContainer extends React.Component {
     this.setState({currentProject: e.target.value})
   }
 
-  handleSavePalette = (e) => {
+  handleSavePalette = async (e) => {
     e.preventDefault()
-    addNewPalette(this.state.colors, this.state.currentProject)
+    await this.props.savePalette(this.props.currentPalette, this.state.currentProject)
       .catch(error => console.log(error.message))
+    this.props.getPalettes()
   }
 
   render() {
-    const projectNames = this.state.projects.map( project => {
+    const projectNames = this.props.projects.map( project => {
       return <option value={project.id}>{project.title}</option>
     })
     return (
@@ -97,6 +95,8 @@ const mapStateToProps = store => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  addPalette: (colors) => dispatch(addPalette(colors))
+  addPalette: (colors) => dispatch(addPalette(colors)),
+  savePalette: (colors, id) => dispatch(addPaletteThunk(colors, id)),
+  getPalettes: () => dispatch(getPalettesThunk())
 })
 export default connect(mapStateToProps, mapDispatchToProps)(ColorsContainer);

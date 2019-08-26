@@ -10,12 +10,14 @@ class ProjectsContainer extends Component {
     super();
     this.state = {
       projects: [],
-      newTitle: ""
+      newTitle: "",
+      palettes: []
     };
   }
 
   async componentDidMount() {
     this.props.getAllProjects()
+    this.setState({palettes: this.props.palettes})
   }
 
   handleChange = event => {

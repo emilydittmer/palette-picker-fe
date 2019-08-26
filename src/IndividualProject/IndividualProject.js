@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './IndividualProject.scss'
-import { fetchPalettesInProject, deletePalette } from '../utils/apiCalls'
+import { fetchPalettesInProject } from '../utils/apiCalls'
 import PaletteInProject from '../PaletteInProject/PaletteInProject'
 import { connect } from 'react-redux'
 import { deleteProjectThunk } from '..//Thunks/ProjectThunks'
@@ -25,8 +25,19 @@ class IndividualProject extends Component {
     }
   }
 
+  async componentDidUpdate() {
+    const palettes = await fetchPalettesInProject(this.props.id)
+    if (palettes === this.state.palettes) {
+      return
+    } else if (palettes !== 'Error fetching palette') {
+      this.setState({ palettes })
+    } else {
+      this.setState({error: palettes})
+    }
+  }
+
   deletePalette = async (id) => {
-    const palettes = await deletePalette(id, this.props.id)
+    const palettes = await this.props.deletePalette(id, this.props.id)
     console.log(palettes)
     if(palettes !== undefined) {
       this.setState({ palettes })
