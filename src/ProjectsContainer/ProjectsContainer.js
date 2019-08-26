@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import "./ProjectsContainer.scss";
-import { getProjects, addNewProject, deleteProject } from "../utils/apiCalls";
+import { addNewProject, deleteProject } from "../utils/apiCalls";
 import IndividualProject from "../IndividualProject/IndividualProject";
 import { connect } from 'react-redux'
-import { getAllProjects } from '../Actions'
+import { getProjectsThunk } from '../Thunks/ProjectThunks'
 
 class ProjectsContainer extends Component {
   constructor() {
@@ -15,8 +15,7 @@ class ProjectsContainer extends Component {
   }
 
   async componentDidMount() {
-    const projects = await getProjects();
-    this.props.getAllProjects(projects)
+    this.props.getAllProjects()
   }
 
   handleChange = event => {
@@ -76,6 +75,6 @@ const mapStateToProps = store => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getAllProjects: (projects) => dispatch(getAllProjects(projects))
+  getAllProjects: () => dispatch(getProjectsThunk())
 })
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectsContainer);

@@ -44,7 +44,6 @@ export const getPalettes = () => {
 }
 
 export const fetchPalettesInProject = (id) => {
-  console.log(id)
   return fetch(`https://palettepicker-api.herokuapp.com/api/v1/projects/${id}/palettes`)
     .then(response => {
       if(!response.ok) {
