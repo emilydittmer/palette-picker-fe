@@ -1,45 +1,50 @@
 import React, { Component } from "react";
 import "./ProjectsContainer.scss";
-import { getProjects, addNewProject, deleteProject } from "../utils/apiCalls";
+import { addNewProject } from "../utils/apiCalls";
 import IndividualProject from "../IndividualProject/IndividualProject";
 import { connect } from 'react-redux'
-import { getAllProjects } from '../Actions'
+import { getProjectsThunk, addProjectThunk } from '../Thunks/ProjectThunks'
 
 class ProjectsContainer extends Component {
   constructor() {
     super();
     this.state = {
       projects: [],
-      newTitle: ""
+      newTitle: "",
+      error: null,
     };
   }
 
   async componentDidMount() {
-    const projects = await getProjects();
-    this.props.getAllProjects(projects)
+    this.props.getAllProjects()
   }
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  handleCheckTitle = () => {
+    return this.props.projects.filter(project => project.title === this.state.newTitle)
+  }
+  
   addNewProject(event) {
     event.preventDefault();
     const project = {
       title: this.state.newTitle
     };
-    addNewProject(project)
-    this.resetInputs();
+    let title = this.handleCheckTitle()
+    if(title.length > 0) {
+      this.setState({error: 'Project name taken'})
+    } else {
+      this.props.addProject(project)
+      this.resetInputs();
+      this.setState({error: null})
+    }
   }
 
   resetInputs = () => {
     this.setState({ newTitle: "", });
   };
-
-  deleteProject = async id => {
-    let removedProject = await deleteProject(id)
-    this.setState({projects: [...this.state.projects]})
-  }
 
   render() {
     const allProjects = this.props.projects.map(project => {
@@ -48,7 +53,6 @@ class ProjectsContainer extends Component {
           key={project.id}
           title={project.title}
           id={project.id}
-          deleteProject = {this.deleteProject}
         />
       );
     });
@@ -64,6 +68,7 @@ class ProjectsContainer extends Component {
             name="newTitle"
           />
           <button onClick={event => this.addNewProject(event)}>Add New Project</button>
+          {this.state.error}
         </form>
         {allProjects}
       </section>
@@ -76,6 +81,7 @@ const mapStateToProps = store => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getAllProjects: (projects) => dispatch(getAllProjects(projects))
+  getAllProjects: () => dispatch(getProjectsThunk()),
+  addProject: project => dispatch(addProjectThunk(project))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectsContainer);
