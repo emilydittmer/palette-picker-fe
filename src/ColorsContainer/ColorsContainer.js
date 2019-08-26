@@ -3,7 +3,9 @@ import './ColorsContainer.scss'
 import Color from '../Color/Color'
 import ColorScheme from 'color-scheme'
 import { getProjects, addNewPalette } from '../utils/apiCalls'
-
+import { connect } from 'react-redux'
+import { addPalette } from '../Actions'
+ 
 
 class ColorsContainer extends React.Component {
   constructor() {
@@ -20,7 +22,7 @@ class ColorsContainer extends React.Component {
   async componentDidMount() {
     const scheme = new ColorScheme();
     let colors = scheme.from_hue(this.randNum()).scheme('contrast').colors()
-    this.setState({colors})
+    this.props.addPalette(colors)
     const projects = await getProjects();
     this.setState({ projects });
   }
@@ -36,7 +38,7 @@ class ColorsContainer extends React.Component {
         colors[i] = this.state.colors[i]
       } 
     })
-    this.setState({colors})
+    this.props.addPalette(colors)
   }
 
   handleLockColor = (index) => {
@@ -78,15 +80,22 @@ class ColorsContainer extends React.Component {
         >Save to Project</button>
       </form>
       <article className="color-container__template">
-        <Color backgroundColor={this.state.colors[0]} index='0' handleLockColor={this.handleLockColor}/>
-        <Color backgroundColor={this.state.colors[1]} index='1' handleLockColor={this.handleLockColor}/>
-        <Color backgroundColor={this.state.colors[2]} index='2' handleLockColor={this.handleLockColor}/>
-        <Color backgroundColor={this.state.colors[3]} index='3' handleLockColor={this.handleLockColor}/>
-        <Color backgroundColor={this.state.colors[4]} index='4' handleLockColor={this.handleLockColor}/>
+        <Color backgroundColor={this.props.currentPalette[0]} index='0' handleLockColor={this.handleLockColor}/>
+        <Color backgroundColor={this.props.currentPalette[1]} index='1' handleLockColor={this.handleLockColor}/>
+        <Color backgroundColor={this.props.currentPalette[2]} index='2' handleLockColor={this.handleLockColor}/>
+        <Color backgroundColor={this.props.currentPalette[3]} index='3' handleLockColor={this.handleLockColor}/>
+        <Color backgroundColor={this.props.currentPalette[4]} index='4' handleLockColor={this.handleLockColor}/>
       </article>
       </section>
     )
   }
 }
 
-export default ColorsContainer;
+const mapStateToProps = store => ({
+  ...store
+})
+
+const mapDispatchToProps = dispatch => ({
+  addPalette: (colors) => dispatch(addPalette(colors))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(ColorsContainer);

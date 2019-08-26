@@ -3,9 +3,10 @@ import "./Color.scss";
 
 const Color = ({ backgroundColor, index, handleLockColor }) => {
   const styling = {
-    backgroundColor: `#${backgroundColor}`
-  };
-
+    backgroundColor: `#${backgroundColor}`,
+    animationDelay: `${index * 500}ms`
+  }
+  
   return (
     <div className="color-box" style={styling}>
       <input

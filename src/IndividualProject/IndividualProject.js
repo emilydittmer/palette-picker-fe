@@ -49,7 +49,7 @@ class IndividualProject extends Component {
       })
     }
     return(
-      <article>
+      <article className="individual-project">
         <h1>{this.props.title}</h1>
         <button className='delete-project-btn' onClick={() => this.props.deleteProject(this.props.id)}>🗑</button>
         <section className='all-palettes'>
