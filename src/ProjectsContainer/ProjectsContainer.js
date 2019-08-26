@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./ProjectsContainer.scss";
-import { getProjects, addNewProject } from "../utils/apiCalls";
+import { getProjects, addNewProject, deleteProject } from "../utils/apiCalls";
 import IndividualProject from "../IndividualProject/IndividualProject";
 import { connect } from 'react-redux'
 import { getAllProjects } from '../Actions'
@@ -36,6 +36,11 @@ class ProjectsContainer extends Component {
     this.setState({ newTitle: "", });
   };
 
+  deleteProject = async id => {
+    let removedProject = await deleteProject(id)
+    this.setState({projects: [...this.state.projects]})
+  }
+
   render() {
     const allProjects = this.props.projects.map(project => {
       return (
@@ -43,6 +48,7 @@ class ProjectsContainer extends Component {
           key={project.id}
           title={project.title}
           id={project.id}
+          deleteProject = {this.deleteProject}
         />
       );
     });
