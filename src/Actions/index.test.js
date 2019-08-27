@@ -99,4 +99,21 @@ describe('Actions', () => {
       expect(result).toEqual(mockPalette)
     })
   })
+
+  describe('addProject', () => {
+    it('Should have the type property of ADD PROJECT', () => {
+      const expected = 'ADD PROJECT'
+      const result = action.addProject().type
+
+      expect(result).toEqual(expected)
+    }) 
+    it('Should have a project property set to the argument', () => {
+      const mockProject = {
+        id: 1
+      }
+      const result = action.addProject(mockProject).project
+
+      expect(result).toEqual(mockProject)
+    })
+  })
 })
