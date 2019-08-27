@@ -49,4 +49,21 @@ describe('Actions', () => {
       expect(result).toEqual(mockError)
     })
   })
+
+  describe('isLoading', () => {
+    it('should have a type property of IS LOADING', () => {
+      const expected = 'IS LOADING';
+      const result = action.isLoading().type
+
+      expect(result).toEqual(expected)
+    })
+    it('Should have a loading property set to the argument', () => {
+      const expected = true;
+      const result = action.isLoading(true).loading
+
+      expect(result).toEqual(expected)
+    })
+  })
+
+  
 })
