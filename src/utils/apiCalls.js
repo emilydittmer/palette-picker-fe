@@ -108,7 +108,6 @@ export const addNewPalette = (colors, id) => {
     },
     body: JSON.stringify(newPalette)
   }
-  console.log(newPalette)
   return fetch('https://palettepicker-api.herokuapp.com/api/v1/palettes', options)
     .then( response => {
         if(!response.ok){
@@ -117,8 +116,8 @@ export const addNewPalette = (colors, id) => {
           return response.json();
         }
       })
-      .then(palette => console.log(palette))
-      .catch(error => console.log(error.message))
+      .then(palette => palette)
+      .catch(error => error)
 }
 
 export const deletePalette = async (id) => {
@@ -129,7 +128,7 @@ export const deletePalette = async (id) => {
     }
   })
     .then(response => response.json())
-    .then(response => console.log('Success:', JSON.stringify(response)))
+    .then(response => JSON.stringify(response))
     .catch(error => Error('Error deleting palette'));
 }
 

@@ -18,7 +18,6 @@ export const deletePaletteThunk = (id, projectId) => {
 }
 
 export const addPaletteThunk = (colors, id) => {
-  console.log(colors, id)
   return async dispatch => {
     try {
       dispatch(isLoading(true))
