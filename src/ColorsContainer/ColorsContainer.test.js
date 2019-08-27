@@ -15,9 +15,9 @@ describe("ColorsContainer", () => {
   let wrapper, props;
   beforeEach(() => {
     props = {
-      palettes: { palettes: [] },
-      projects: { projects: [] },
-      currentPalette: { currentPalette: [] }
+      palettes: [],
+      projects:  [{id: 1, title: 'Example 1'}, {id: 2, title: 'Example 2'}],
+      currentPalette: []
     };
     wrapper = shallow(<ColorsContainer {...props} />);
   });

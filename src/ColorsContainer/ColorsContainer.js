@@ -59,7 +59,7 @@ export class ColorsContainer extends React.Component {
 
   render() {
     const projectNames = this.props.projects.map( project => {
-      return <option value={project.id}>{project.title}</option>
+      return <option value={project.id} key={project.id}>{project.title}</option>
     })
     return (
       <section className="color-container__styling">
