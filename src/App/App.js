@@ -9,7 +9,7 @@ function App() {
   return (
     <main className="App">
       <header className="app-header__styling">
-        <h1 className='project-title'>Palette Picker</h1>
+        <h1 className='title'>Palette Picker</h1>
       </header>
       <ColorsContainer/>
       <ProjectsContainer/>

@@ -21,9 +21,15 @@
   border-radius: .5em;
   margin: 15px;
   padding: .5em;
-  font-size: 1em;
-  // overflow: auto
   color: #444;
+}
+
+.generate-btn{
+  width: 45%;
+}
+
+.save-to-palette-btn{
+  width: 35%;
 }
 
 .generate-btn:hover,

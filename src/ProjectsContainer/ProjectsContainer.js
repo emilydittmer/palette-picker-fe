@@ -68,7 +68,7 @@ class ProjectsContainer extends Component {
             value={this.state.newTitle}
             onChange={event => this.handleChange(event)}
             name="newTitle"
-            className="new-title"
+            className="new-title-input"
           />
           <button
             onClick={event => this.addNewProject(event)}
