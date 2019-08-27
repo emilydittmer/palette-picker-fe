@@ -34,4 +34,19 @@ describe('Actions', () => {
       expect(result).toEqual(mockProjects)
     })
   })
+
+  describe('hasErrored', () => {
+    it('Should have the type property of HAS ERRORED', () => {
+      const expected = 'HAS ERRORED';
+      const result = action.hasErrored().type
+
+      expect(result).toEqual(expected)
+    })
+    it('Should have an error property set to the argument', () => {
+      const mockError = 'Error: mock error'
+      const result = action.hasErrored(mockError).error
+
+      expect(result).toEqual(mockError)
+    })
+  })
 })
