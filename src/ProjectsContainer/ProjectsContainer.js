@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./ProjectsContainer.scss";
-import { addNewProject } from "../utils/apiCalls";
 import IndividualProject from "../IndividualProject/IndividualProject";
 import { connect } from "react-redux";
 import { getProjectsThunk, addProjectThunk } from "../Thunks/ProjectThunks";
