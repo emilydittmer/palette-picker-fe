@@ -14,6 +14,7 @@ const PaletteInProject = ({ id, color1, color2, color3, color4, color5, deletePa
           className='delete-btn' 
           onClick={() => deletePalette(id)}
           src={deleteBtn}
+          alt="Trash can shaped delete button"
         />
       </div>
       <div

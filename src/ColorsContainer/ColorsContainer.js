@@ -2,19 +2,17 @@ import React from 'react'
 import './ColorsContainer.scss'
 import Color from '../Color/Color'
 import ColorScheme from 'color-scheme'
-import { getProjects, addNewPalette } from '../utils/apiCalls'
 import { addPaletteThunk, getPalettesThunk } from '../Thunks/PaletteThunk'
 import { connect } from 'react-redux'
 import { addPalette } from '../Actions'
 
-class ColorsContainer extends React.Component {
+export class ColorsContainer extends React.Component {
   constructor() {
     super();
     this.state = {
       locked:[false, false, false, false, false],
       currentProject: '',
       error: '',
-      colors: []
     }
   }
 
@@ -37,7 +35,7 @@ class ColorsContainer extends React.Component {
       .colors();
     this.state.locked.forEach((lock, i) => {
       if (lock === true) {
-        colors[i] = this.state.colors[i];
+        colors[i] = this.props.currentPalette[i];
       }
     });
     this.props.addPalette(colors);
@@ -117,11 +115,11 @@ class ColorsContainer extends React.Component {
   }
 }
 
-const mapStateToProps = store => ({
+export const mapStateToProps = store => ({
   ...store
 });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   addPalette: (colors) => dispatch(addPalette(colors)),
   savePalette: (colors, id) => dispatch(addPaletteThunk(colors, id)),
   getPalettes: () => dispatch(getPalettesThunk())

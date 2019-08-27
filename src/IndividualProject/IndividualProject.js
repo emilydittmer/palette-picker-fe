@@ -75,6 +75,7 @@ class IndividualProject extends Component {
           <img
             className="delete-project-btn"
             src={deleteBtn}
+            alt="Trash can shaped delete button"
             onClick={() => this.props.deleteProject(this.props.id)}
           />
         </section>
