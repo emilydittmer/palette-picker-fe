@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import "./ProjectsContainer.scss";
 import { addNewProject } from "../utils/apiCalls";
 import IndividualProject from "../IndividualProject/IndividualProject";
-import { connect } from 'react-redux'
-import { getProjectsThunk, addProjectThunk } from '../Thunks/ProjectThunks'
+import { connect } from "react-redux";
+import { getProjectsThunk, addProjectThunk } from "../Thunks/ProjectThunks";
 
 class ProjectsContainer extends Component {
   constructor() {
@@ -11,12 +11,12 @@ class ProjectsContainer extends Component {
     this.state = {
       projects: [],
       newTitle: "",
-      error: null,
+      error: null
     };
   }
 
   async componentDidMount() {
-    this.props.getAllProjects()
+    this.props.getAllProjects();
   }
 
   handleChange = event => {
@@ -24,26 +24,28 @@ class ProjectsContainer extends Component {
   };
 
   handleCheckTitle = () => {
-    return this.props.projects.filter(project => project.title === this.state.newTitle)
-  }
-  
+    return this.props.projects.filter(
+      project => project.title === this.state.newTitle
+    );
+  };
+
   addNewProject(event) {
     event.preventDefault();
     const project = {
       title: this.state.newTitle
     };
-    let title = this.handleCheckTitle()
-    if(title.length > 0) {
-      this.setState({error: 'Project name taken'})
+    let title = this.handleCheckTitle();
+    if (title.length > 0) {
+      this.setState({ error: "Project name taken" });
     } else {
-      this.props.addProject(project)
+      this.props.addProject(project);
       this.resetInputs();
-      this.setState({error: null})
+      this.setState({ error: null });
     }
   }
 
   resetInputs = () => {
-    this.setState({ newTitle: "", });
+    this.setState({ newTitle: "" });
   };
 
   render() {
@@ -59,15 +61,21 @@ class ProjectsContainer extends Component {
     return (
       <section className="project-section">
         <h2>My Projects</h2>
-        <form>
+        <form className="add-project-form">
           <input
             type="text"
             placeholder="New Project Title"
             value={this.state.newTitle}
             onChange={event => this.handleChange(event)}
             name="newTitle"
+            className="new-title"
           />
-          <button onClick={event => this.addNewProject(event)}>Add New Project</button>
+          <button
+            onClick={event => this.addNewProject(event)}
+            className="add-project-btn"
+          >
+            Add New Project
+          </button>
           {this.state.error}
         </form>
         {allProjects}
@@ -78,10 +86,13 @@ class ProjectsContainer extends Component {
 
 const mapStateToProps = store => ({
   ...store
-})
+});
 
 const mapDispatchToProps = dispatch => ({
   getAllProjects: () => dispatch(getProjectsThunk()),
   addProject: project => dispatch(addProjectThunk(project))
-})
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectsContainer);
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProjectsContainer);

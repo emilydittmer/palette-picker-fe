@@ -20,8 +20,10 @@
   height: 40px;
   border-radius: .5em;
   margin: 15px;
-  padding: 10px;
+  padding: .5em;
   font-size: 1em;
+  // overflow: auto
+  color: #444;
 }
 
 .generate-btn:hover,
@@ -44,7 +46,7 @@ select {
   padding: .6em 1.4em .5em .8em;
   height:40px;
   box-sizing: border-box;
-  margin-top: 14px;
+  margin-top: 15px;
   border: 1px solid #aaa;
   box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
   border-radius: .5em;

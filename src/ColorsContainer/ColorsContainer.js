@@ -13,13 +13,15 @@ class ColorsContainer extends React.Component {
     this.state = {
       locked:[false, false, false, false, false],
       currentProject: '',
-      error: ''
+      error: '',
+      colors: []
     }
   }
 
   async componentDidMount() {
     const scheme = new ColorScheme();
     let colors = scheme.from_hue(this.randNum()).scheme('contrast').colors()
+    this.setState({colors})
     this.props.addPalette(colors)
     this.props.getPalettes()
   }
