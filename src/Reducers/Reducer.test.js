@@ -1,6 +1,7 @@
 import { ErrorReducer } from './ErrorReducer';
 import { LoadingReducer } from './LoadingReducer'
 import { PaletteReducer } from './PaletteReducer'
+import { PalettesReducer } from './PalettesReducer'
 
 
 describe('Reducers', () => {
@@ -66,6 +67,51 @@ describe('Reducers', () => {
         color: 'red'
       }
       const result = PaletteReducer([], mockAction)
+
+      expect(result).toEqual(expected)
+    })
+  })
+
+  describe('PalettesReducer', () => {
+    it('should return default state', () => {
+      const mockState = undefined;
+      const expected = [];
+      const result = PalettesReducer(mockState, {})
+
+      expect(result).toEqual(expected)
+    })
+    it('should return all palettes in state when action type GET PALETTES', () => {
+      const mockAction = {
+        type: 'GET PALETTES',
+        palettes: [
+          {id: 1},
+          {id: 2},
+          {id: 3}
+        ]
+      }
+      const expected = [
+        {id: 1},
+        {id: 2},
+        {id: 3}
+      ]
+      const result = PalettesReducer([], mockAction)
+
+      expect(result).toEqual(expected)
+    })
+    it('should add a palette object to state array when action type ADD TO PALETTES', () => {
+      const mockAction = {
+        type: 'ADD TO PALETTES',
+        palette: {
+          id: 4
+        }
+      }
+      const mockState = [
+        {id: 1},
+        {id: 2},
+        {id: 3}
+      ]
+      const expected = [...mockState, {id: 4}]
+      const result = PalettesReducer(mockState, mockAction)
 
       expect(result).toEqual(expected)
     })
