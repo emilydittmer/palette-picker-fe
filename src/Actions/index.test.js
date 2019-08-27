@@ -65,5 +65,38 @@ describe('Actions', () => {
     })
   })
 
-  
+  describe('getAllPaletttes', () => {
+    it('Should have the type property of GET PALETTES', () => {
+      const expected = 'GET PALETTES';
+      const result = action.getAllPalettes().type
+
+      expect(result).toEqual(expected)
+    })
+    it('Should have a palettes property set to the argument', () => {
+      const mockPalettes = [
+        {id: 1},
+        {id: 2}
+      ]
+      const result = action.getAllPalettes(mockPalettes).palettes
+
+      expect(result).toEqual(mockPalettes)
+    })
+  })
+
+  describe('addToPalettes', () => {
+    it('Should have a type property of ADD TO PALETTES', () => {
+      const expected = 'ADD TO PALETTES'
+      const result = action.addToPalettes().type
+
+      expect(result).toEqual(expected)
+    }) 
+    it('should have a palette property set to the argument', () => {
+      const mockPalette = {
+        id: 1
+      }
+      const result = action.addToPalettes(mockPalette).palette
+
+      expect(result).toEqual(mockPalette)
+    })
+  })
 })
