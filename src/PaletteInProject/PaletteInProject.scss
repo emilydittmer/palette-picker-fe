@@ -3,3 +3,21 @@
   width: 150px;
   margin: 0 10px;
 }
+
+.color1-box{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.delete-btn{
+  height: 20px;
+  cursor: pointer;
+  margin: 0;
+  padding: 2px;
+  color: hsla(0, 0%, 100%, 0.753);
+}
+
+
+.delete-btn:hover{
+  height: 25px;
+}

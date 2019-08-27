@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { deleteProjectThunk } from "..//Thunks/ProjectThunks";
 import { deletePaletteThunk } from "../Thunks/PaletteThunk";
 import deleteBtn from '../utils/images/delete.svg'
+import {fetchPalettesInProject} from "../utils/apiCalls";
 
 class IndividualProject extends Component {
   constructor({ project }) {
@@ -15,10 +16,8 @@ class IndividualProject extends Component {
     };
   }
 
-  componentDidMount() {
-    const palettes = this.props.palettes.filter(
-      palette => palette.project_id === this.props.id
-    );
+  async componentDidMount() {
+    const palettes = await fetchPalettesInProject(this.props.id)
     if (palettes.length > 0) {
       this.setState({ palettes });
     } else {
