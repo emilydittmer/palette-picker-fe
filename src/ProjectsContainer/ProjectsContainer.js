@@ -4,7 +4,7 @@ import IndividualProject from "../IndividualProject/IndividualProject";
 import { connect } from "react-redux";
 import { getProjectsThunk, addProjectThunk } from "../Thunks/ProjectThunks";
 
-class ProjectsContainer extends Component {
+export class ProjectsContainer extends Component {
   constructor() {
     super();
     this.state = {
@@ -83,11 +83,11 @@ class ProjectsContainer extends Component {
   }
 }
 
-const mapStateToProps = store => ({
+export const mapStateToProps = store => ({
   ...store
 });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   getAllProjects: () => dispatch(getProjectsThunk()),
   addProject: project => dispatch(addProjectThunk(project))
 });
