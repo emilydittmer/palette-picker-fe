@@ -1,4 +1,4 @@
-import { getProjectsThunk, deleteProjectThunk } from './ProjectThunks'
+import { getProjectsThunk, deleteProjectThunk, addProjectThunk } from './ProjectThunks'
 
 describe('Project Thunks', () => {
   describe('getProjectsThunk', () => {
@@ -48,7 +48,6 @@ describe('Project Thunks', () => {
     let mockDispatch, mockResponse
     beforeEach(() => {
       mockDispatch = jest.fn()
-
       mockResponse = {id: 1}
       window.fetch = jest.fn().mockImplementation(() => {
         return Promise.resolve({
@@ -84,6 +83,51 @@ describe('Project Thunks', () => {
         loading: false
       }
       await deleteProjectThunk()(mockDispatch)
+      expect(mockDispatch).toBeCalledWith(mockAction)
+    })
+  })
+
+  describe('addProjectThunk', () => {
+    let mockDispatch, mockResponse
+    beforeEach(() => {
+      mockDispatch = jest.fn()
+      mockResponse = {id: 1}
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.resolve({
+          json: () => Promise.resolve(mockResponse)
+        })
+      })
+    })
+    it('Should return and call dispatch', async () => {
+      await addProjectThunk()(mockDispatch)
+
+      expect(mockDispatch).toHaveBeenCalled()
+    })
+    it('Shopuld call the isLoading action with true argument', async () => {
+      const mockAction = {
+        type: 'IS LOADING',
+        loading: true
+      }
+      await addProjectThunk()(mockDispatch)
+
+      expect(mockDispatch).toBeCalledWith(mockAction)
+    })
+    it('Should dispatch addProject action', async () => {
+      const mockAction = {
+        type: 'ADD PROJECT',
+        project: undefined
+      }
+      await addProjectThunk()(mockDispatch)
+
+      expect(mockDispatch).toBeCalledWith(mockAction)
+    })
+    it('Should dispatch isLoading with false argument', async () => {
+      const mockAction = {
+        type: 'IS LOADING',
+        loading: false
+      }
+      await addProjectThunk()(mockDispatch)
+
       expect(mockDispatch).toBeCalledWith(mockAction)
     })
   })
