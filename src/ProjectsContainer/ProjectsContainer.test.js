@@ -3,13 +3,15 @@ import { shallow } from 'enzyme'
 import { ProjectsContainer, mapDispatchToProps, mapStateToProps } from './ProjectsContainer'
 
 describe('ProjectsContainer', () => {
-  let wrapper, projects, getAllProjects
+  let wrapper, projects, getAllProjects, addProject
   beforeEach(() => {
-    projects = [{id: 1}]
+    projects = [{title: 'Example Project', id: 1}]
     getAllProjects = jest.fn()
+    addProject = jest.fn()
     wrapper = shallow(<ProjectsContainer 
       projects={projects}
       getAllProjects={getAllProjects}
+      addProject={addProject}
       />)
   })
   it('Should match the snapshot', () => {
@@ -35,10 +37,17 @@ describe('ProjectsContainer', () => {
     expect(wrapper.state().newTitle).toEqual(event.target.value)
   })
   it('Should check to see if a title matches any from state', () => {
-    const mockProject = {
-      title: 'Example Project'
+    wrapper.instance().setState({newTitle: 'Example Project'})
+    const result = wrapper.instance().handleCheckTitle()
+
+    expect(result).toEqual(projects)
+  })
+  it('Should be able set an error if the title matches a previous title when adding a new project', () => {
+    const event = {
+      preventDefault: jest.fn()
     }
-    wrapper.instance().setState({projects: [mockProject]})
-    
+    wrapper.instance().setState({newTitle: 'Example Project'})
+    wrapper.instance().addNewProject(event)
+    expect(wrapper.state().error).toEqual('Project name taken')
   })
 })
