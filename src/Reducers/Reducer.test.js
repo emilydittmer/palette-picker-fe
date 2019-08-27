@@ -2,6 +2,7 @@ import { ErrorReducer } from './ErrorReducer';
 import { LoadingReducer } from './LoadingReducer'
 import { PaletteReducer } from './PaletteReducer'
 import { PalettesReducer } from './PalettesReducer'
+import { ProjectReducer } from './ProjectReducer'
 
 
 describe('Reducers', () => {
@@ -112,6 +113,48 @@ describe('Reducers', () => {
       ]
       const expected = [...mockState, {id: 4}]
       const result = PalettesReducer(mockState, mockAction)
+
+      expect(result).toEqual(expected)
+    })
+  })
+
+  describe('ProjectReducer', () => {
+    it('Should return default state', () => {
+      const mockState = undefined;
+      const expected = [];
+      const result = ProjectReducer(mockState, {})
+
+      expect(result).toEqual(expected)
+    })
+    it('Should return an array of projects when action type GET PROJECTS', () => {
+      const mockAction = {
+        type: 'GET PROJECTS',
+        projects: [
+          {id: 1},
+          {id: 2}
+        ]
+      }
+      const expected = [
+        {id: 1},
+        {id: 2}
+      ]
+      const result = ProjectReducer([], mockAction)
+
+      expect(result).toEqual(expected)
+    })
+    it('shoud add a project object to the projects array when action type ADD PROJECT', () => {
+      const mockAction = {
+        type: 'ADD PROJECT',
+        project: {
+          id: 3
+        }
+      }
+      const mockState = [
+        {id: 1},
+        {id: 2}
+      ]
+      const expected = [...mockState, {id: 3}]
+      const result = ProjectReducer(mockState, mockAction)
 
       expect(result).toEqual(expected)
     })
