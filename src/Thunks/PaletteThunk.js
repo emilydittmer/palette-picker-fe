@@ -2,13 +2,11 @@ import { deletePalette, fetchPalettesInProject, addNewPalette, getPalettes } fro
 import {hasErrored, isLoading, getAllPalettes } from '../Actions'
 
 export const deletePaletteThunk = (id, projectId) => {
-  console.log(id, projectId)
   return async dispatch => {
     try {
       dispatch(isLoading(true))
       await deletePalette(id)
       const response = await fetchPalettesInProject(projectId)
-      console.log(response)
       dispatch(isLoading(false))
       return response    
     }
