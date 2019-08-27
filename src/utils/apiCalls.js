@@ -15,7 +15,7 @@ export const getProjects = () => {
         }
       })
     })
-    .catch(error => console.log(error.message))
+    .catch(error => error)
 }
 
 export const getPalettes = () => {
@@ -78,7 +78,7 @@ export const addNewProject = (project) => {
   })
   .then(response => {
     if(!response.ok){
-      return error => console.log(error);
+      throw Error('Error adding new project');
     } else {
       return response.json();
     }
@@ -89,7 +89,7 @@ export const addNewProject = (project) => {
         title: project.title
       }
   })
-  .catch(error => console.log(error.message))
+  .catch(error => error)
 }
 
 export const addNewPalette = (colors, id) => {
@@ -141,6 +141,6 @@ export const deleteProject = async (id) => {
     }
   })
     .then(response => response.json())
-    .then(response => console.log('Success:', JSON.stringify(response)))
-    .catch(error => Error('Error deleting project'));
+    .then(response => JSON.stringify(response))
+    .catch(error => error);
 }

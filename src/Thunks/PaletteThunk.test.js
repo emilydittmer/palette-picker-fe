@@ -11,7 +11,8 @@ describe('Palette Thunks', () => {
         mockResponse = {id: 1}
         window.fetch = jest.fn().mockImplementation(() => {
           return Promise.resolve({
-            json: () => Promise.resolve(mockResponse)
+            json: () => Promise.resolve(mockResponse),
+            ok: true
           })
         })
       })
@@ -19,12 +20,20 @@ describe('Palette Thunks', () => {
       await deletePaletteThunk(id, projectId)(mockDispatch)
       expect(mockDispatch).toHaveBeenCalled()
     })
-    it('Should call the isLoading dispatch', async () => {
+    it('Should call the isLoading action true', async () => {
       const mockAction = {
         type: 'IS LOADING',
         loading: true
       }
       await deletePaletteThunk(id, projectId)(mockDispatch)
+      expect(mockDispatch).toHaveBeenCalledWith(mockAction)
+    })
+    it('Should call the isLoading dispatch false', async () => {
+      const mockAction = {
+        type: 'IS LOADING',
+        loading: false
+      }
+      await deletePaletteThunk()(mockDispatch)
       expect(mockDispatch).toHaveBeenCalledWith(mockAction)
     })
   })

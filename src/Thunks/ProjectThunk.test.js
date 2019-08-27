@@ -5,10 +5,11 @@ describe('Project Thunks', () => {
     let mockDispatch, mockResponse
     beforeEach(() => {
       mockDispatch = jest.fn()
-      mockResponse = {id: 1}
+      mockResponse = [{id: 1}]
       window.fetch = jest.fn().mockImplementation(() => {
         return Promise.resolve({
-          json: () => Promise.resolve(mockResponse)
+          json: () => Promise.resolve(mockResponse),
+          ok: true
         })
       })
     })
@@ -28,7 +29,7 @@ describe('Project Thunks', () => {
     it('should call the getAllProjects action', async () => {
       const mockAction = {
         type: 'GET PROJECTS',
-        projects: undefined
+        projects: mockResponse
       }
       await getProjectsThunk()(mockDispatch)
 
@@ -42,16 +43,39 @@ describe('Project Thunks', () => {
       await getProjectsThunk()(mockDispatch)
       expect(mockDispatch).toBeCalledWith(mockAction)
     })
+    it('SAD PATH: Should dispatch isLoading false argument', async () => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.rejects()
+      })
+      const mockAction = {
+        type: 'IS LOADING',
+        loading: false
+      }
+      await getProjectsThunk()(mockDispatch)
+      expect(mockDispatch).toBeCalledWith(mockAction)
+    })
+    it('SAD PATH: Should dispatch hasErrored', async () => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.catch()
+      })
+      const mockAction = {
+        type: 'HAS ERRORED',
+        error: TypeError('Promise.catch is not a function')
+      }
+      await getProjectsThunk()(mockDispatch)
+      expect(mockDispatch).toBeCalledWith(mockAction)
+    })
   })
 
   describe('deleteProjectThunk', () => {
     let mockDispatch, mockResponse
     beforeEach(() => {
       mockDispatch = jest.fn()
-      mockResponse = {id: 1}
+      mockResponse = [{id: 1}]
       window.fetch = jest.fn().mockImplementation(() => {
         return Promise.resolve({
-          json: () => Promise.resolve(mockResponse)
+          json: () => Promise.resolve(mockResponse),
+          ok: true
         })
       })
     })
@@ -71,7 +95,7 @@ describe('Project Thunks', () => {
     it('Should call the getAllProjects action', async () => {
       const mockAction = {
         type: 'GET PROJECTS',
-        projects: undefined
+        projects: mockResponse
       }
       await deleteProjectThunk()(mockDispatch)
 
@@ -85,16 +109,39 @@ describe('Project Thunks', () => {
       await deleteProjectThunk()(mockDispatch)
       expect(mockDispatch).toBeCalledWith(mockAction)
     })
+    it('SAD PATH: Should dispatch isLoading false when catching error', async () => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.catch()
+      })
+      const mockAction = {
+        type: 'IS LOADING',
+        loading: false
+      }
+      await deleteProjectThunk()(mockDispatch)
+      expect(mockDispatch).toBeCalledWith(mockAction)
+    })
+    it('SAD PATH: Should dispatch hasErrored when catching error', async () => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.catch()
+      })
+      const mockAction = {
+        type: 'HAS ERRORED',
+        error: TypeError('Promise.catch is not a function')
+      }
+      await deleteProjectThunk()(mockDispatch)
+      expect(mockDispatch).toBeCalledWith(mockAction)
+    })
   })
 
   describe('addProjectThunk', () => {
     let mockDispatch, mockResponse
     beforeEach(() => {
       mockDispatch = jest.fn()
-      mockResponse = {id: 1}
+      mockResponse = {id: 1, title: 'mock title'}
       window.fetch = jest.fn().mockImplementation(() => {
         return Promise.resolve({
-          json: () => Promise.resolve(mockResponse)
+          json: () => Promise.resolve(mockResponse),
+          ok: true
         })
       })
     })
@@ -115,9 +162,9 @@ describe('Project Thunks', () => {
     it('Should dispatch addProject action', async () => {
       const mockAction = {
         type: 'ADD PROJECT',
-        project: undefined
+        project: mockResponse
       }
-      await addProjectThunk()(mockDispatch)
+      await addProjectThunk({title: "mock title"})(mockDispatch)
 
       expect(mockDispatch).toBeCalledWith(mockAction)
     })
@@ -128,6 +175,28 @@ describe('Project Thunks', () => {
       }
       await addProjectThunk()(mockDispatch)
 
+      expect(mockDispatch).toBeCalledWith(mockAction)
+    })
+    it('SAD PATH: Should dispatch isLoading false with catching error', async () => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.catch()
+      })
+      const mockAction = {
+        type: 'IS LOADING',
+        loading: false
+      }
+      await addProjectThunk()(mockDispatch)
+      expect(mockDispatch).toBeCalledWith(mockAction)
+    })
+    it('SAD PATH: Should dispatch hasErrored when catchin error', async () => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.catch()
+      })
+      const mockAction = {
+        type: 'HAS ERRORED',
+        error: TypeError('Promise.catch is not a function')
+      }
+      await addProjectThunk()(mockDispatch)
       expect(mockDispatch).toBeCalledWith(mockAction)
     })
   })
