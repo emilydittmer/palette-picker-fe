@@ -16,4 +16,22 @@ describe('Actions', () => {
       expect(result).toEqual(mockColors)
     })
   })
+
+  describe('getAllProjects', () => {
+    it('Should have the type property of GET PROJECTS', () => {
+      const expected = 'GET PROJECTS';
+      const result = action.getAllProjects().type
+
+      expect(result).toEqual(expected)
+    })
+    it('Should have a projects property set to the argument', () => {
+      const mockProjects = [
+        {id: 1},
+        {id: 2}
+      ]
+      const result = action.getAllProjects(mockProjects).projects
+
+      expect(result).toEqual(mockProjects)
+    })
+  })
 })
