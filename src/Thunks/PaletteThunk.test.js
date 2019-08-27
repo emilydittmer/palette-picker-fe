@@ -11,7 +11,8 @@ describe('Palette Thunks', () => {
         mockResponse = {id: 1}
         window.fetch = jest.fn().mockImplementation(() => {
           return Promise.resolve({
-            json: () => Promise.resolve(mockResponse)
+            json: () => Promise.resolve(mockResponse),
+            ok: true
           })
         })
       })
@@ -19,7 +20,7 @@ describe('Palette Thunks', () => {
       await deletePaletteThunk(id, projectId)(mockDispatch)
       expect(mockDispatch).toHaveBeenCalled()
     })
-    it('Should call the isLoading dispatch', async () => {
+    it('Should call the isLoading action true', async () => {
       const mockAction = {
         type: 'IS LOADING',
         loading: true
@@ -27,16 +28,49 @@ describe('Palette Thunks', () => {
       await deletePaletteThunk(id, projectId)(mockDispatch)
       expect(mockDispatch).toHaveBeenCalledWith(mockAction)
     })
+    it('Should call the isLoading dispatch false', async () => {
+      const mockAction = {
+        type: 'IS LOADING',
+        loading: false
+      }
+      await deletePaletteThunk()(mockDispatch)
+      expect(mockDispatch).toHaveBeenCalledWith(mockAction)
+    })
+    it('SAD PATH: Should call isLoading false when catching error', async () => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.catch()
+      })
+      const mockAction = {
+        type: 'IS LOADING',
+        loading: false
+      }
+      await deletePaletteThunk()(mockDispatch)
+      expect(mockDispatch).toHaveBeenCalledWith(mockAction)
+    })
+    it('SAD PATH: Should dispatch hasErrored action when catching error', async () => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.catch()
+      })
+      const mockAction = {
+        type: 'HAS ERRORED',
+        error: TypeError('Promise.catch is not a function')
+      }
+      await deletePaletteThunk()(mockDispatch)
+      expect(mockDispatch).toHaveBeenCalledWith(mockAction)
+    })
   })
 
   describe('addPaletteThunk', () => {
-    let mockDispatch, mockResponse
+    let mockDispatch, mockResponse, colors, id
     beforeEach(() => {
       mockDispatch = jest.fn()
-      mockResponse = {id: 1}
+      mockResponse = [{id: 1}]
+      colors = ['red', 'blue']
+      id= 1
       window.fetch = jest.fn().mockImplementation(() => {
         return Promise.resolve({
-          json: () => Promise.resolve(mockResponse)
+          json: () => Promise.resolve(mockResponse),
+          ok: true
         })
       })
     })
@@ -45,7 +79,7 @@ describe('Palette Thunks', () => {
 
       expect(mockDispatch).toHaveBeenCalled()
     })
-    it('Should call this is loading action', async () => {
+    it('Should call this isLoading action', async () => {
       const mockAction = {
         type: 'IS LOADING',
         loading: true
@@ -53,10 +87,43 @@ describe('Palette Thunks', () => {
       await addPaletteThunk()(mockDispatch)
       expect(mockDispatch).toHaveBeenCalledWith(mockAction)
     })
-    xit('Should cavll the getAllPalettes action', async () => {
+    it('Should call the getAllPalettes action', async () => {
+      const mockAction = {
+        type: 'GET PALETTES',
+        palettes: mockResponse
+      }
+      await addPaletteThunk(colors, id)(mockDispatch)
+
+      expect(mockDispatch).toHaveBeenCalledWith(mockAction)
+    })
+    it('Should dispatch isLoading action false', async () => {
+      const mockAction = {
+        type: 'IS LOADING',
+        loading: false
+      }
+      await addPaletteThunk()(mockDispatch)
+      
+      expect(mockDispatch).toHaveBeenCalledWith(mockAction)
+    })
+    it('SAD PATH: Should dispatch isLoading action false when catching error', async () => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.catch()
+      })
+      const mockAction = {
+        type: 'IS LOADING',
+        loading: false
+      }
+      await addPaletteThunk()(mockDispatch)
+
+      expect(mockDispatch).toHaveBeenCalledWith(mockAction)
+    })
+    it('SAD PATH: Should dispatch hasErrored action when catching error', async () => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.catch()
+      })
       const mockAction = {
         type: 'HAS ERRORED',
-        "error": `[TypeError: Cannot read property '0' of undefined]`
+        error: TypeError('Cannot read property \'0\' of undefined')
       }
       await addPaletteThunk()(mockDispatch)
 
@@ -68,10 +135,11 @@ describe('Palette Thunks', () => {
     let mockDispatch, mockResponse
     beforeEach(() => {
       mockDispatch = jest.fn()
-      mockResponse = {id: 1}
+      mockResponse = [{id: 1}]
       window.fetch = jest.fn().mockImplementation(() => {
         return Promise.resolve({
-          json: () => Promise.resolve(mockResponse)
+          json: () => Promise.resolve(mockResponse),
+          ok: true
         })
       })
     })
@@ -80,10 +148,52 @@ describe('Palette Thunks', () => {
 
       expect(mockDispatch).toHaveBeenCalled()
     })
-    it('Should call the IS LOADING action', async () => {
+    it('Should dispatch isLoading action true', async () => {
       const mockAction = {
         type: 'IS LOADING',
         loading: true
+      }
+      await getPalettesThunk()(mockDispatch)
+
+      expect(mockDispatch).toHaveBeenCalledWith(mockAction)
+    })
+    it('Should dispatch the getAllPalettes action', async () => {
+      const mockAction = {
+        type: 'GET PALETTES',
+        palettes: mockResponse
+      }
+      await getPalettesThunk()(mockDispatch)
+
+      expect(mockDispatch).toHaveBeenCalledWith(mockAction)
+    })
+    it('Should dispatch the isLoading false', async () => {
+      const mockAction = {
+        type: 'IS LOADING',
+        loading: false
+      }
+      await getPalettesThunk()(mockDispatch)
+
+      expect(mockDispatch).toHaveBeenCalledWith(mockAction)
+    })
+    it('SAD PATH: Should dispatch isLoading false when catching error', async () => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.catch()
+      })
+      const mockAction = {
+        type: 'IS LOADING',
+        loading: false
+      }
+      await getPalettesThunk()(mockDispatch)
+
+      expect(mockDispatch).toHaveBeenCalledWith(mockAction)
+    })
+    it('SAD PATH: Should dispatch hasErrored when catching error', async () => {
+      window.fetch = jest.fn().mockImplementation(() => {
+        return Promise.catch()
+      })
+      const mockAction = {
+        type: 'HAS ERRORED',
+        error: TypeError('Promise.catch is not a function')
       }
       await getPalettesThunk()(mockDispatch)
 

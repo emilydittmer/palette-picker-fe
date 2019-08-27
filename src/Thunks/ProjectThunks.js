@@ -7,6 +7,7 @@ export const getProjectsThunk = () => {
       dispatch(isLoading(true))
       const response = await getProjects()
       dispatch(getAllProjects(response))
+      dispatch(isLoading(false))
     }
     catch (error){
       dispatch(isLoading(false))
@@ -36,8 +37,8 @@ export const addProjectThunk = project => {
     try {
       dispatch(isLoading(true))
       const response = await addNewProject(project)
-      console.log(response)
       dispatch(addProject(response))
+      dispatch(isLoading(false))
     }
     catch(error) {
       dispatch(isLoading(false))
