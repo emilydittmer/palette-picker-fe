@@ -3,7 +3,9 @@ import {
   getPalettes,
   fetchPalettesInProject,
   addNewProject,
-  addNewPalette
+  addNewPalette,
+  deletePalette,
+  deleteProject
 } from "./apiCalls.js";
 
 describe("getProjects", () => {
@@ -193,4 +195,64 @@ describe('addNewPalette', () => {
       Error("Error adding new palette")
     );
   });
+})
+
+describe('deletePalette', () => {
+  beforeEach(() => {
+    window.fetch = jest.fn().mockImplementation(() => {
+      return Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve()
+      });
+    });
+  })
+  it('should be called with correct arguments', () => {
+    const expected = ['https://palettepicker-api.herokuapp.com/api/v1/palettes/1', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }];
+    deletePalette(1)
+    expect(window.fetch).toHaveBeenCalledWith(...expected);
+  })
+  it('should throw an error', () => {
+    window.fetch = jest.fn().mockImplementation(() => {
+      return Promise.resolve({
+        ok: false
+      })
+    });
+
+    expect(deletePalette(1)).rejects.toEqual(Error('Error deleting palette.'));
+  })
+})
+
+describe('deleteProject', () => {
+  beforeEach(() => {
+    window.fetch = jest.fn().mockImplementation(() => {
+      return Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve()
+      });
+    });
+  })
+  it('should be called with correct arguments', () => {
+    const expected = ['https://palettepicker-api.herokuapp.com/api/v1/projects/1', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }];
+    deleteProject(1)
+    expect(window.fetch).toHaveBeenCalledWith(...expected);
+  })
+  it('should throw an error', () => {
+    window.fetch = jest.fn().mockImplementation(() => {
+      return Promise.resolve({
+        ok: false
+      })
+    });
+
+    expect(deleteProject(1)).rejects.toEqual(Error('Error deleting project.'));
+  })
 })
