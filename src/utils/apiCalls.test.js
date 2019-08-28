@@ -30,15 +30,15 @@ describe("getProjects", () => {
     getProjects();
     expect(window.fetch).toHaveBeenCalledWith(expected);
   });
-  it("should throw an error if the response is not ok", () => {
+  it("should throw an error if the response is not ok", async () => {
     window.fetch = jest.fn().mockImplementation(() => {
       return Promise.resolve({
         ok: false
       });
     });
-    expect(getProjects()).resolves.toEqual({
-      Error: "Error fetching projects"
-    });
+    const result = await getProjects()
+    const expected = 'Error fetching projects'
+    expect(result).toEqual(expected);
   });
 });
 
@@ -68,33 +68,34 @@ describe("getPalettes", () => {
     getPalettes();
     expect(window.fetch).toHaveBeenCalledWith(expected);
   });
-  it("should throw an error if the response is not ok", () => {
+  it("should throw an error if the response is not ok", async () => {
     window.fetch = jest.fn().mockImplementation(() => {
       return Promise.resolve({
         ok: false
       });
     });
-    expect(getPalettes()).resolves.toEqual({
-      Error: "Error fetching palettes"
-    });
+    const response = await getPalettes()
+    const expected = "Error fetching palettes"
+
+    expect(response).toEqual(expected);
   });
 });
 
 describe("fetchPalettesInProject", () => {
   let mockPalettes, mockProjectId;
   beforeEach(() => {
-    (mockProjectId = 1),
-      (mockPalettes = [
-        {
-          id: 1,
-          project_id: 1,
-          color1: "#1234fe",
-          color2: "#ffffff",
-          color3: "#00ff22",
-          color4: "#444444",
-          color5: "#ffll88"
-        }
-      ]);
+    mockProjectId = 1
+    mockPalettes = [
+      {
+        id: 1,
+        project_id: 1,
+        color1: "#1234fe",
+        color2: "#ffffff",
+        color3: "#00ff22",
+        color4: "#444444",
+        color5: "#ffll88"
+      }
+      ]
     window.fetch = jest.fn().mockImplementation(() => {
       return Promise.resolve({
         ok: true,
@@ -108,19 +109,20 @@ describe("fetchPalettesInProject", () => {
     expect(window.fetch).toHaveBeenCalledWith(expected);
   });
 
-  it("should throw an error if the response is not ok", () => {
+  it("should throw an error if the response is not ok", async () => {
     window.fetch = jest.fn().mockImplementation(() => {
       return Promise.resolve({
         ok: false
       });
     });
-    expect(fetchPalettesInProject(mockProjectId)).resolves.toEqual({
-      Error: "Error fetching palette"
-    });
+    const result = await fetchPalettesInProject(mockProjectId)
+    const expected = 'Error fetching palette'
+    expect(result).toEqual(expected);
   });
 });
 
 describe("addNewProject", () => {
+  let mockResponse
   beforeEach(() => {
     window.fetch = jest.fn().mockImplementation(() => {
       return Promise.resolve({
@@ -145,20 +147,21 @@ describe("addNewProject", () => {
     expect(window.fetch).toHaveBeenCalledWith(...expected);
   });
 
-  it("should throw an error if the response is not ok", () => {
+  it("should throw an error if the response is not ok", async () => {
     const mockProject = { title: "Example 1" };
     window.fetch = jest.fn().mockImplementationOnce(() => {
       return Promise.resolve({
         ok: false
       });
     });
-    expect(addNewProject(mockProject)).resolves.toEqual(
-      Error("Error adding new project")
-    );
+    const result = await addNewProject(mockProject)
+    const expected = 'Error adding new project'
+    expect(result).toEqual(expected);
   });
 });
 
 describe('addNewPalette', () => {
+  let mockResponse
   beforeEach(() => {
     window.fetch = jest.fn().mockImplementation(() => {
       return Promise.resolve({
@@ -167,23 +170,22 @@ describe('addNewPalette', () => {
       });
     });
   })
-  xit('should be called with all params', () => {
+  xit('should be called with all params', async () => {
     const mockColors = ["1234fe", "ffffff", "00ff22", "444444", "ffll88"]
     const mockProjectId = 1;
-    const expected = [
-      "https://palettepicker-api.herokuapp.com/api/v1/palettes",
-      {
-        method: "POST",
-        body: JSON.stringify(mockColors, mockProjectId),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }
-    ];
-    addNewPalette(mockColors, mockProjectId)
-    expect(window.fetch).toHaveBeenCalledWith(...expected)
+    const expected = {
+      project_id: mockProjectId,
+      color_1: "#" + mockColors[0],
+      color_2: "#" + mockColors[1],
+      color_3: "#" + mockColors[2],
+      color_4: "#" + mockColors[3],
+      color_5: "#" + mockColors[4]
+    }
+    const stringifiedExpected = JSON.stringify(expected)
+    await addNewPalette(mockColors, mockProjectId)
+    expect().toHaveBeenCalledWith(stringifiedExpected)
   })
-  it("should throw an error if the response is not ok", () => {
+  it("should throw an error if the response is not ok", async () => {
     const mockColors = ["1234fe", "ffffff", "00ff22", "444444", "ffll88"]
     const mockProjectId = 1;
     window.fetch = jest.fn().mockImplementationOnce(() => {
@@ -191,9 +193,9 @@ describe('addNewPalette', () => {
         ok: false
       });
     });
-    expect(addNewProject(mockColors, mockProjectId)).resolves.toEqual(
-      Error("Error adding new palette")
-    );
+    const result = await addNewProject(mockColors, mockProjectId)
+    const expected = 'Error adding new project'
+    expect(result).toEqual(expected);
   });
 })
 
@@ -216,14 +218,15 @@ describe('deletePalette', () => {
     deletePalette(1)
     expect(window.fetch).toHaveBeenCalledWith(...expected);
   })
-  it('should throw an error', () => {
+  it('should throw an error', async () => {
     window.fetch = jest.fn().mockImplementation(() => {
       return Promise.resolve({
         ok: false
       })
     });
-
-    expect(deletePalette(1)).rejects.toEqual(Error('Error deleting palette.'));
+    const response = await deletePalette(1)
+    const expected = 'Error deleting palette'
+    expect(response).toEqual(expected);
   })
 })
 
@@ -246,13 +249,14 @@ describe('deleteProject', () => {
     deleteProject(1)
     expect(window.fetch).toHaveBeenCalledWith(...expected);
   })
-  it('should throw an error', () => {
+  it('should throw an error', async () => {
     window.fetch = jest.fn().mockImplementation(() => {
       return Promise.resolve({
         ok: false
       })
     });
-
-    expect(deleteProject(1)).rejects.toEqual(Error('Error deleting project.'));
+    const response = await deleteProject(1)
+    const expected = 'Error deleting project'
+    expect(response).toEqual(expected);
   })
 })
