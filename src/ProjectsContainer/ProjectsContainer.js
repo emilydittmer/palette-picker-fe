@@ -15,7 +15,7 @@ export class ProjectsContainer extends Component {
   }
 
   async componentDidMount() {
-    this.props.getAllProjects();
+    await this.props.getAllProjects();
   }
 
   handleChange = event => {
