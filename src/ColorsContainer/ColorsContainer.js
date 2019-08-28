@@ -74,6 +74,7 @@ export class ColorsContainer extends React.Component {
             <select
               value={this.state.currentProject}
               onChange={e => this.handleOnChange(e)}
+              className='project-select'
             >
               <option>Select Project</option>
               {projectNames}

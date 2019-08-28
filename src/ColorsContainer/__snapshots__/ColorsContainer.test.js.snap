@@ -1,3 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ColorsContainer should match snapshot 1`] = `ShallowWrapper {}`;
+
+exports[`ColorsContainer should set state for the current project 1`] = `ShallowWrapper {}`;
+
+exports[`ColorsContainer should set state for the error message 1`] = `ShallowWrapper {}`;
+
+exports[`ColorsContainer should set state for the locked state 1`] = `ShallowWrapper {}`;
