@@ -111,7 +111,7 @@ export const addNewPalette = (colors, id) => {
   return fetch('https://palettepicker-api.herokuapp.com/api/v1/palettes', options)
     .then( response => {
         if(!response.ok){
-          return error => console.log(error);
+          throw Error('Error adding new palette');
         } else {
           return response.json();
         }
