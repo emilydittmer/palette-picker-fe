@@ -24,6 +24,7 @@ Palette Picker is a paired project, built in ten days, focusing on RESTful API d
 - Knex
 - SQL
 - Postgres
+- TravisCI
 
 ## Installation
 
