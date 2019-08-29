@@ -1,68 +1,60 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Palette Picker
 
-## Available Scripts
+## Description
 
-In the project directory, you can run:
+Palette Picker is a paired project, built in ten days, focusing on RESTful API design skills. This app randomly generates a palette and displays any of the users saved projects and palettes. The user can also lock a color and randomize the palette again. Once the user has a palette they would like to save, they can then add the palette to an existing project or create a new project. Once a project or palette is saved, the user will also be able to remove the project or palette. 
 
-### `npm start`
+## Technologies Used
+###Front-End
+- SCSS
+- Flex-box
+- React
+- Redux
+- API fetches
+- Thunks
+- Enzyme & Jest testing
+- Webpack
+- NPM
+- JavaScript
+- HTML
+###Back-end
+- Node.js/Express
+- Knex
+- SQL
+- Postgres
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Installation
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+```git clone https://github.com/emilydittmer/palette-picker-fe.git```
+In the same folder you cloned the repository also clone the back-end repository with
 
-### `npm test`
+```git clone https://github.com/emilydittmer/palette-picker-be.git```
+Once you have cloned the repo, to install the library dependencies cd into the folders just created and run:
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```npm install```
+Once everything is installed in both folders, in the back-end folder, run npm start in your terminal, you should see "Listening on http://localhost:3000/". Now opening a separate tab in the terminal cd into the front-end repository and run npm start you're default browser should open a tab to http://localhost:3000/ if not simply go to http://localhost:3001/ in your preferred browser.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Screenshots
+### Home Page
+![Home Page](https://github.com/emilydittmer/palette-picker-fe/blob/master/src/demo/homepage.png)
+### Generate Palette
+![Generate Palette](https://github.com/emilydittmer/palette-picker-fe/blob/master/src/demo/generate-palette.gif)
+### Delete Palette and Project
+![Delete Palette](https://github.com/emilydittmer/palette-picker-fe/blob/master/src/demo/delete-palette.gif)
+![Delete Project](https://github.com/emilydittmer/palette-picker-fe/blob/master/src/demo/delete-project.gif)
+### Wireframing
+![Wireframe Homepage](https://github.com/emilydittmer/palette-picker-fe/blob/master/src/demo/Wireframing.png)
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Learning Goals
+- Server-Side Testing
+- Further understanding of complete CRUD endpoints
+- Connecting BE & FE repositories using CORS
+- Multiple environments:
+-- Testing
+-- Making use of automatic continuous integration with TravisCI
+-- Deployment with Heroku
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Contributors
+[Emily Dittmer](https://github.com/emilydittmer)
+[Ryan Flachman](https://github.com/flachman03)

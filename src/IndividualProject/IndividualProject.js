@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { deleteProjectThunk } from "..//Thunks/ProjectThunks";
 import { deletePaletteThunk } from "../Thunks/PaletteThunk";
 import deleteBtn from '../utils/images/delete.svg'
-import {fetchPalettesInProject} from "../utils/apiCalls";
 
 class IndividualProject extends Component {
   constructor({ project }) {
@@ -17,7 +16,7 @@ class IndividualProject extends Component {
   }
 
   async componentDidMount() {
-    const palettes = await fetchPalettesInProject(this.props.id)
+    const palettes = this.props.palettes.filter(palette => palette.project_id === this.props.id)
     if (palettes.length > 0) {
       this.setState({ palettes });
     } else {
@@ -47,10 +46,9 @@ class IndividualProject extends Component {
   };
 
   render() {
-    let addPalette = {};
     let allPalettes;
-    if (this.state.error) {
-      addPalette = <h3>Add a palette!</h3>;
+    if (this.state.palettes.length === 0) {
+      let addPalette = <h3>Add a palette!</h3>;
     } else {
       allPalettes = this.state.palettes.map(palette => {
         return (
@@ -80,9 +78,9 @@ class IndividualProject extends Component {
           />
         </section>
         <section className="all-palettes">
-          {this.state.error && addPalette}
-          {this.props.loading && <h2>Loading</h2>}
-          {this.state.palettes && !this.props.loading && allPalettes}
+          {this.state.palettes.length === 0 && <h3>Add a Palette!</h3>}
+          {this.state.palettes.length === 0 && this.props.loading && <h2>Loading</h2>}
+          {this.state.palettes && allPalettes}
         </section>
       </article>
     );
