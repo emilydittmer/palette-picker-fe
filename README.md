@@ -1,5 +1,7 @@
 # Palette Picker
 
+Visit Site [Here](https://palettepicker-ui.herokuapp.com)
+
 ## Description
 
 Palette Picker is a paired project, built in ten days, focusing on RESTful API design skills. This app randomly generates a palette and displays any of the users saved projects and palettes. The user can also lock a color and randomize the palette again. Once the user has a palette they would like to save, they can then add the palette to an existing project or create a new project. Once a project or palette is saved, the user will also be able to remove the project or palette. 
