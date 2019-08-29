@@ -26,7 +26,6 @@ export class IndividualProject extends Component {
   }
 
   componentWillReceiveProps(props) {
-    console.log(props);
     const palettes = props.palettes.filter(
       palette => palette.project_id === this.props.id
     );
