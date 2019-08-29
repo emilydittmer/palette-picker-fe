@@ -15,7 +15,7 @@ export const getProjects = () => {
         }
       })
     })
-    .catch(error => error)
+    .catch(error => error.message)
 }
 
 export const getPalettes = () => {
@@ -89,7 +89,7 @@ export const addNewProject = (project) => {
         title: project.title
       }
   })
-  .catch(error => error)
+  .catch(error => error.message)
 }
 
 export const addNewPalette = (colors, id) => {
@@ -121,25 +121,37 @@ export const addNewPalette = (colors, id) => {
 }
 
 export const deletePalette = async (id) => {
-  await fetch(`https://palettepicker-api.herokuapp.com/api/v1/palettes/${id}`, {
+  return await fetch(`https://palettepicker-api.herokuapp.com/api/v1/palettes/${id}`, {
     method:'DELETE',
     headers: {
       'Content-Type':"application/json"
     }
   })
+  .then( response => {
+    if(!response.ok){
+      throw Error('Error deleting palette');
+    } else {
+      return response.json();
+    }
+  })
     .then(response => response.json())
-    .then(response => JSON.stringify(response))
-    .catch(error => Error('Error deleting palette'));
+    .catch(error => error.message);
 }
 
 export const deleteProject = async (id) => {
-  await fetch(`https://palettepicker-api.herokuapp.com/api/v1/projects/${id}`, {
+  return await fetch(`https://palettepicker-api.herokuapp.com/api/v1/projects/${id}`, {
     method:'DELETE',
     headers: {
       'Content-Type':"application/json"
     }
   })
+  .then( response => {
+    if(!response.ok){
+      throw Error('Error deleting project');
+    } else {
+      return response.json();
+    }
+  })
     .then(response => response.json())
-    .then(response => JSON.stringify(response))
-    .catch(error => error);
+    .catch(error => error.message);
 }

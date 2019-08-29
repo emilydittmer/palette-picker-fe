@@ -7,10 +7,8 @@ import {
 import { 
   addPalette, 
   savePalette, 
-  getPalettes 
 } from "../Actions";
 import { shallow } from 'enzyme';
-import { addPaletteThunk } from '../Thunks/PaletteThunk'
 
 describe("ColorsContainer", () => {
   let wrapper, props;
@@ -25,7 +23,9 @@ describe("ColorsContainer", () => {
     props = {
       palettes: [],
       projects:  [{id: 1, title: 'Example 1'}, {id: 2, title: 'Example 2'}],
-      currentPalette: []
+      currentPalette: [],
+      addPalette: jest.fn(),
+      getPalettes: jest.fn()
     };
     wrapper = shallow(<ColorsContainer {...props} />);
   });

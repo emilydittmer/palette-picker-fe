@@ -6,7 +6,7 @@ import { deleteProjectThunk } from "..//Thunks/ProjectThunks";
 import { deletePaletteThunk } from "../Thunks/PaletteThunk";
 import deleteBtn from '../utils/images/delete.svg'
 
-class IndividualProject extends Component {
+export class IndividualProject extends Component {
   constructor({ project }) {
     super(project);
     this.state = {
@@ -25,7 +25,6 @@ class IndividualProject extends Component {
   }
 
   componentWillReceiveProps(props) {
-    console.log(props);
     const palettes = props.palettes.filter(
       palette => palette.project_id === this.props.id
     );
@@ -87,10 +86,10 @@ class IndividualProject extends Component {
   }
 }
 
-const mapStateToProps = store => ({
+export const mapStateToProps = store => ({
   ...store
 });
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   deleteProject: id => dispatch(deleteProjectThunk(id)),
   deletePalette: (id, projectId) => dispatch(deletePaletteThunk(id, projectId))
 });

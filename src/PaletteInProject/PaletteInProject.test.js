@@ -13,9 +13,10 @@ describe('PaletteInProject', () => {
       color3: '123456',
       color4: '23456a',
       color5: 'abcdef',
-      deletePalette: jest.fn()
-    },
-    wrapper = shallow(<PaletteInProject {...props} />)
+      deletePalette: jest.fn(),
+    };
+
+    wrapper = shallow(<PaletteInProject {...props}/>)
   })
 
   it('should match the snapshot', () => {
